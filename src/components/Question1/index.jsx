@@ -33,8 +33,8 @@ export default function Question1({ years }) {
         1. Qual o estado com a maior média de valores enviados por quantidade de
         transações para um determinado ano?
       </p>
-      <div className="row">
-        <div className="col-md-4 col-lg-3">
+      <div className="row gy-4">
+        <div className="col-md-4 col-lg-3 pt-1">
           <select
             defaultValue="select"
             className="form-select"
@@ -54,7 +54,7 @@ export default function Question1({ years }) {
               ))}
           </select>
         </div>
-        <div className="col-md-3 col-lg-2">
+        <div className="col-md-3 col-lg-2 pt-1">
           <Button disabled={isBtnDisabled} onClick={search} className="w-100">
             <Loader isLoading={isLoading} />
             Buscar

@@ -8,6 +8,7 @@ import { Container, Loader } from '../../styles/GlobalStyles';
 import { QuestionsBox } from './styled';
 import Question1 from '../../components/Question1';
 import Question2 from '../../components/Question2';
+import Question3 from '../../components/Question3';
 
 export default function Home() {
   const [years, setYears] = useState([]);
@@ -30,13 +31,16 @@ export default function Home() {
     loadYears();
   }, [loadYears]);
   return (
-    <Container>
+    <>
       <Loader isLoading={isLoading} />
-      <h1 className="text-center">Perguntas</h1>
-      <QuestionsBox>
-        <Question1 years={years} />
-        <Question2 years={years} />
-      </QuestionsBox>
-    </Container>
+      <Container>
+        <h1 className="text-center">Perguntas</h1>
+        <QuestionsBox>
+          <Question1 years={years} />
+          <Question2 years={years} />
+          <Question3 years={years} />
+        </QuestionsBox>
+      </Container>
+    </>
   );
 }

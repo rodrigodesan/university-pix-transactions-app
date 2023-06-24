@@ -4,9 +4,10 @@ import { toast } from 'react-toastify';
 
 import axios from '../../services/axios';
 
-import Question1 from '../../components/Question1';
-
 import { Container, Loader } from '../../styles/GlobalStyles';
+import { QuestionsBox } from './styled';
+import Question1 from '../../components/Question1';
+import Question2 from '../../components/Question2';
 
 export default function Home() {
   const [years, setYears] = useState([]);
@@ -32,7 +33,10 @@ export default function Home() {
     <Container>
       <Loader isLoading={isLoading} />
       <h1 className="text-center">Perguntas</h1>
-      <Question1 years={years} />
+      <QuestionsBox>
+        <Question1 years={years} />
+        <Question2 years={years} />
+      </QuestionsBox>
     </Container>
   );
 }

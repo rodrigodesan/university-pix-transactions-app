@@ -6,7 +6,7 @@ import axios from '../../services/axios';
 import { yearTypes } from '../../propTypes/answers';
 import { Button, Loader } from '../../styles/GlobalStyles';
 
-export default function Question1({ years }) {
+export default function Question2({ years }) {
   const [answer, setAnswer] = useState('');
   const [year, setyear] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ export default function Question1({ years }) {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=desc`
+        `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=asc`
       );
       if (!data) toast.error('Ano sem registros');
       setAnswer(data);
@@ -30,7 +30,7 @@ export default function Question1({ years }) {
   return (
     <div className="mb-3">
       <p>
-        1. Qual o estado com a maior média de valores enviados por quantidade de
+        2. Qual o estado com a menor média de valores enviados por quantidade de
         transações para um determinado ano?
       </p>
       <div className="row">
@@ -71,4 +71,4 @@ export default function Question1({ years }) {
   );
 }
 
-Question1.propTypes = yearTypes.isRequired;
+Question2.propTypes = yearTypes.isRequired;

@@ -13,6 +13,9 @@ export default createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
   }
+  body {
+    overflow-x: hidden;
+  }
 `;
 
 export const Container = styled(BootstrapContainer)`
@@ -27,13 +30,14 @@ export const Button = styled(BootstrapButton)`
 export const Loader = styled.div`
   position: absolute;
   z-index: 1001;
-  width: 110%;
-  height: 110%;
-  top: -5%;
-  left: -5%;
+  width: 105%;
+  height: 105%;
+  top: -2%;
+  left: -2%;
   background-color: #fff;
   background-image: url(${loader});
   background-repeat: no-repeat;
   background-position: center;
   display: ${(props) => (props.isLoading ? 'block' : 'none')};
+  overflow: hidden;
 `;

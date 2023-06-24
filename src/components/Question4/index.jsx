@@ -11,7 +11,6 @@ export default function Question4({ years }) {
   const [answer, setAnswer] = useState([]);
   const [year, setyear] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isBtnDisabled, setIsBtnDisabled] = useState(true);
 
   async function search() {
     setIsLoading(true);
@@ -39,10 +38,7 @@ export default function Question4({ years }) {
           <select
             defaultValue="select"
             className="form-select"
-            onChange={(e) => {
-              setyear(e.target.value);
-              setIsBtnDisabled(false);
-            }}
+            onChange={(e) => setyear(e.target.value)}
           >
             <option disabled value="select">
               Selecione o ano
@@ -56,7 +52,7 @@ export default function Question4({ years }) {
           </select>
         </div>
         <div className="col-md-3 col-lg-2 pt-1">
-          <Button disabled={isBtnDisabled} onClick={search} className="w-100">
+          <Button disabled={!year} onClick={search} className="w-100">
             <Loader isLoading={isLoading} />
             Buscar
           </Button>
@@ -73,7 +69,7 @@ export default function Question4({ years }) {
           </thead>
           <tbody>
             {answer.map((item) => (
-              <tr key={item.id}>
+              <tr key={item.acronym}>
                 <th scope="row">{item.acronym}</th>
                 <td>{item.region}</td>
                 <td>{item.pix_number}</td>

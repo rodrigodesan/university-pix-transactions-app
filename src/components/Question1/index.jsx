@@ -1,41 +1,31 @@
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 
 import axios from '../../services/axios';
+import { yearTypes } from '../../propTypes/answers';
+import { Button, Loader } from '../../styles/GlobalStyles';
 
-export default function Question1() {
-  const [years, setYears] = useState([]);
-  const [answer1, setAnswer1] = useState('');
+export default function Question1({ years }) {
+  const [answer, setAnswer] = useState('');
+  const [year, setyear] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isBtnDisabled, setIsBtnDisabled] = useState(true);
 
-  const loadYears = useCallback(async () => {
+  async function search() {
+    setIsLoading(true);
     try {
-      const { data } = await axios.get('/years');
-      setYears(data);
-    } catch (err) {
-      const status = get(err, 'response.status', 0);
-      const errors = get(err, 'response.data.errors', []);
-      if (status === 400) errors.map((error) => toast.error(error));
-    }
-  }, []);
-
-  useEffect(() => {
-    loadYears();
-  }, [loadYears]);
-
-  async function selectYear(e) {
-    try {
-      const year = e.target.value;
       const { data } = await axios.get(
-        `/transations/max-avg-state-by-vl-per-qt/${year}`
+        `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=desc`
       );
-      if (!year) toast.error('Ano sem registros');
-      setAnswer1(data);
+      if (!data) toast.error('Ano sem registros');
+      setAnswer(data);
     } catch (err) {
       const status = get(err, 'response.status', 0);
       const errors = get(err, 'response.data.errors', []);
       if (status === 400) errors.map((error) => toast.error(error));
     }
+    setIsLoading(false);
   }
   return (
     <div className="mb-3">
@@ -47,27 +37,38 @@ export default function Question1() {
         <div className="col-lg-3">
           <select
             defaultValue="select"
-            className="form-select mt-1"
-            onChange={selectYear}
+            className="form-select"
+            onChange={(e) => {
+              setyear(e.target.value);
+              setIsBtnDisabled(false);
+            }}
           >
             <option disabled value="select">
               Selecione o ano
             </option>
             {years &&
-              years.map((year) => (
-                <option value={year.id} key={year.id}>
-                  {year.year}
+              years.map((yearItem) => (
+                <option value={yearItem.id} key={yearItem.id}>
+                  {yearItem.year}
                 </option>
               ))}
           </select>
         </div>
-        {answer1 && (
-          <p className="col-lg-8">
-            Estado: {answer1.state}
-            <br /> Média: {answer1.average}
+        <div className="col-lg-2">
+          <Button disabled={isBtnDisabled} onClick={search} className="w-100">
+            <Loader isLoading={isLoading} />
+            Buscar
+          </Button>
+        </div>
+        {answer && (
+          <p className="col-lg-6">
+            Estado: {answer.state}
+            <br /> Média: {answer.average}
           </p>
         )}
       </div>
     </div>
   );
 }
+
+Question1.propTypes = yearTypes.isRequired;

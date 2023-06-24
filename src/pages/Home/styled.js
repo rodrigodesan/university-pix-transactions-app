@@ -5,7 +5,6 @@ export const QuestionsBox = styled.div`
   flex-direction: column;
   row-gap: 1rem;
   & > * {
-    height: 100px;
-    min-height: fit-content;
+    min-height: 100px;
   }
 `;

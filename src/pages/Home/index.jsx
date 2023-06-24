@@ -9,6 +9,7 @@ import { QuestionsBox } from './styled';
 import Question1 from '../../components/Question1';
 import Question2 from '../../components/Question2';
 import Question3 from '../../components/Question3';
+import Question4 from '../../components/Question4';
 
 export default function Home() {
   const [years, setYears] = useState([]);
@@ -39,6 +40,7 @@ export default function Home() {
           <Question1 years={years} />
           <Question2 years={years} />
           <Question3 years={years} />
+          <Question4 years={years} />
         </QuestionsBox>
       </Container>
     </>

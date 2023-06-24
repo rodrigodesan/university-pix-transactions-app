@@ -2,12 +2,13 @@ import { get } from 'lodash';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 
+import { Table } from 'react-bootstrap';
 import axios from '../../services/axios';
 import { yearTypes } from '../../propTypes/answers';
 import { Button, Loader } from '../../styles/GlobalStyles';
 
-export default function Question3({ years }) {
-  const [answer, setAnswer] = useState('');
+export default function Question4({ years }) {
+  const [answer, setAnswer] = useState([]);
   const [year, setyear] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
@@ -16,7 +17,7 @@ export default function Question3({ years }) {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        `/transations/max-pix-avg-region?year=${year}`
+        `/transations/pix-by-region?year=${year}`
       );
       if (!data) toast.error('Ano sem registros');
       setAnswer(data);
@@ -30,10 +31,10 @@ export default function Question3({ years }) {
   return (
     <div className="mb-3">
       <p>
-        3. Qual a região com a maior média de pix recebidos para um determinado
+        4. Qual a quantidade de pix realizados por região para um determinado
         ano?
       </p>
-      <div className="row gy-4">
+      <div className="row gy-4 mb-4">
         <div className="col-md-4 col-lg-3 pt-1">
           <select
             defaultValue="select"
@@ -60,15 +61,29 @@ export default function Question3({ years }) {
             Buscar
           </Button>
         </div>
-        {answer && (
-          <p className="col-md-4 col-lg-6">
-            Região: {answer.region}
-            <br /> Média: {answer.average}
-          </p>
-        )}
       </div>
+      {answer.length > 0 && (
+        <Table className="table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Sigla</th>
+              <th scope="col">Região</th>
+              <th scope="col">Quantidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {answer.map((item) => (
+              <tr key={item.id}>
+                <th scope="row">{item.acronym}</th>
+                <td>{item.region}</td>
+                <td>{item.pix_number}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 }
 
-Question3.propTypes = yearTypes.isRequired;
+Question4.propTypes = yearTypes.isRequired;

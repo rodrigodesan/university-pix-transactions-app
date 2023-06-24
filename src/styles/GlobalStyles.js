@@ -34,6 +34,7 @@ export const Loader = styled.div`
   height: 105%;
   top: -2%;
   left: -2%;
+  border-collapse: collapse;
   background-color: #fff;
   background-image: url(${loader});
   background-repeat: no-repeat;

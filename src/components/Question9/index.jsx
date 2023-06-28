@@ -31,7 +31,7 @@ export default function Question9({ years, states }) {
   return (
     <div className="mb-3">
       <p>
-        10. Para determinado estado, em qual mês de determinado ano ocorreu o
+        9. Para determinado estado, em qual mês de determinado ano ocorreu o
         maior volume de transações, incluindo transações enviadas e recebidas
         por pessoas físicas e jurídicas?
       </p>

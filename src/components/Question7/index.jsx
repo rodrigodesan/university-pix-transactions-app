@@ -65,7 +65,7 @@ export default function Question7({ years }) {
             <tr>
               <th scope="col">Cidade</th>
               <th scope="col">Estado</th>
-              <th scope="col">Média</th>
+              <th scope="col">Diferença</th>
             </tr>
           </thead>
           <tbody>
@@ -73,7 +73,7 @@ export default function Question7({ years }) {
               <tr key={item.city_code}>
                 <td>{item.city}</td>
                 <td>{item.state}</td>
-                <td>{Number(item.average).toFixed(2)}</td>
+                <td>{Number(item.dif_rec_pay).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>

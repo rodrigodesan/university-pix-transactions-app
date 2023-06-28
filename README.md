@@ -6,11 +6,11 @@ Deployment: https://pix-transations-app.vercel.app/
 
 .env format:
 
-VITE_API_URL=
+`VITE_API_URL=`
 
 Starting up:
-
+```
 npm install
-
 npm run dev
+```
 

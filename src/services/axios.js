@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://pix-transations-api.onrender.com/',
+  baseURL: import.meta.env.VITE_API_URL,
 });

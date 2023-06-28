@@ -14,18 +14,20 @@ import Question5 from '../../components/Question5';
 import Question6 from '../../components/Question6';
 import Question7 from '../../components/Question7';
 import Question8 from '../../components/Question8';
+import Question9 from '../../components/Question9';
 
 export default function Home() {
   const [years, setYears] = useState([]);
+  const [states, setStates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadYears = useCallback(async () => {
+  const loadData = useCallback(async (route, stateFunction) => {
     setIsLoading(true);
     try {
-      const { data, status } = await axios.get('/years');
+      const { data, status } = await axios.get(route);
       if (status < 200 || status > 299)
         toast.error(`Falha na requisição com status ${status}`);
-      else setYears(data);
+      else stateFunction(data);
     } catch (err) {
       const status = get(err, 'response.status', 0);
       const errors = get(err, 'response.data.errors', []);
@@ -35,8 +37,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    loadYears();
-  }, [loadYears]);
+    loadData('/years', setYears);
+    loadData('/states', setStates);
+  }, [loadData]);
   return (
     <Container>
       <Loader isLoading={isLoading} />
@@ -50,6 +53,7 @@ export default function Home() {
         <Question6 />
         <Question7 years={years} />
         <Question8 years={years} />
+        <Question9 years={years} states={states} />
       </QuestionsBox>
     </Container>
   );

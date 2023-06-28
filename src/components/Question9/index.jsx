@@ -31,7 +31,7 @@ export default function Question9({ years, states }) {
   return (
     <div className="mb-3">
       <p>
-        9.Para determinado estado, em qual mês de determinado ano ocorreu o
+        10. Para determinado estado, em qual mês de determinado ano ocorreu o
         maior volume de transações, incluindo transações enviadas e recebidas
         por pessoas físicas e jurídicas?
       </p>
@@ -71,7 +71,7 @@ export default function Question9({ years, states }) {
           </select>
         </div>
         <div className="col-md-3 col-lg-2 pt-1">
-          <Button disabled={!year} onClick={search} className="w-100">
+          <Button disabled={!year || !state} onClick={search} className="w-100">
             <Loader isLoading={isLoading} />
             Buscar
           </Button>

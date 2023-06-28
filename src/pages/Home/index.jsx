@@ -15,10 +15,12 @@ import Question6 from '../../components/Question6';
 import Question7 from '../../components/Question7';
 import Question8 from '../../components/Question8';
 import Question9 from '../../components/Question9';
+import Question10 from '../../components/Question10';
 
 export default function Home() {
   const [years, setYears] = useState([]);
   const [states, setStates] = useState([]);
+  const [regions, setRegions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const loadData = useCallback(async (route, stateFunction) => {
@@ -39,6 +41,7 @@ export default function Home() {
   useEffect(() => {
     loadData('/years', setYears);
     loadData('/states', setStates);
+    loadData('/regions', setRegions);
   }, [loadData]);
   return (
     <Container>
@@ -54,6 +57,7 @@ export default function Home() {
         <Question7 years={years} />
         <Question8 years={years} />
         <Question9 years={years} states={states} />
+        <Question10 regions={regions} />
       </QuestionsBox>
     </Container>
   );

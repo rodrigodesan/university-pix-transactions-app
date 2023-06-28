@@ -13,6 +13,7 @@ import Question4 from '../../components/Question4';
 import Question5 from '../../components/Question5';
 import Question6 from '../../components/Question6';
 import Question7 from '../../components/Question7';
+import Question8 from '../../components/Question8';
 
 export default function Home() {
   const [years, setYears] = useState([]);
@@ -46,6 +47,7 @@ export default function Home() {
         <Question5 years={years} />
         <Question6 />
         <Question7 years={years} />
+        <Question8 years={years} />
       </QuestionsBox>
     </Container>
   );

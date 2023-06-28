@@ -4,12 +4,21 @@ import { useState } from 'react';
 
 import { Table } from 'react-bootstrap';
 import axios from '../../services/axios';
-import { yearTypes } from '../../propTypes/answers';
 import { Button, Loader } from '../../styles/GlobalStyles';
 
-export default function Question4({ years }) {
+const avgs = [];
+for (let i = 1; i <= 10; i++) {
+  const val = i * 1000000000;
+  avgs.push({
+    key: i,
+    val,
+    val_formated: new Intl.NumberFormat('pt-BR').format(val),
+  });
+}
+
+export default function Question6() {
   const [answer, setAnswer] = useState([]);
-  const [year, setyear] = useState(0);
+  const [minAvg, setMinAvg] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   async function search() {
@@ -17,9 +26,9 @@ export default function Question4({ years }) {
     setAnswer('');
     try {
       const { data } = await axios.get(
-        `/transations/pix-by-region?year=${year}`
+        `transations/higher-avg-on-vl-company-payer?minAvg=${minAvg}`
       );
-      if (!data) toast.error('Ano sem registros');
+      if (!data) toast.error('Não há transações acima desse valor');
       setAnswer(data);
     } catch (err) {
       const status = get(err, 'response.status', 0);
@@ -31,29 +40,32 @@ export default function Question4({ years }) {
   return (
     <div className="mb-3">
       <p>
-        4. Qual a quantidade de pix realizados por região para um determinado
-        ano?
+        6. Quais municípios tiveram média superior a determinado valor em envios
+        realizados por pessoas jurídicas em todo operíodo?
       </p>
-      <div className="row gy-4 mb-4">
+      <div className="row gy-4 mb-3">
         <div className="col-md-4 col-lg-3 pt-1">
           <select
             defaultValue="select"
             className="form-select"
-            onChange={(e) => setyear(e.target.value)}
+            onChange={(e) => {
+              const avgSelect = Number(e.target.value);
+              setMinAvg(avgSelect);
+            }}
           >
             <option disabled value="select">
-              Selecione o ano
+              Selecione o valor mínimo
             </option>
-            {years &&
-              years.map((yearItem) => (
-                <option value={yearItem.id} key={yearItem.id}>
-                  {yearItem.year}
+            {avgs &&
+              avgs.map((avg) => (
+                <option value={avg.val} key={avg.key}>
+                  {avg.val_formated}
                 </option>
               ))}
           </select>
         </div>
         <div className="col-md-3 col-lg-2 pt-1">
-          <Button disabled={!year} onClick={search} className="w-100">
+          <Button disabled={!minAvg} onClick={search} className="w-100">
             <Loader isLoading={isLoading} />
             Buscar
           </Button>
@@ -63,19 +75,17 @@ export default function Question4({ years }) {
         <Table className="table-striped table-bordered">
           <thead>
             <tr>
-              <th scope="col">Sigla</th>
-              <th scope="col">Região</th>
-              <th scope="col">Quantidade</th>
+              <th scope="col">Cidade</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Média</th>
             </tr>
           </thead>
           <tbody>
             {answer.map((item) => (
-              <tr key={item.acronym}>
-                <th scope="row">{item.acronym}</th>
-                <td>{item.region}</td>
-                <td>
-                  {new Intl.NumberFormat('pt-BR').format(item.pix_number)}
-                </td>
+              <tr key={item.city_code}>
+                <td>{item.city}</td>
+                <td>{item.state}</td>
+                <td>{Number(item.average).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
@@ -84,5 +94,3 @@ export default function Question4({ years }) {
     </div>
   );
 }
-
-Question4.propTypes = yearTypes.isRequired;

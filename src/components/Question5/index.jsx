@@ -30,6 +30,7 @@ export default function Question5({ years }) {
 
   async function search() {
     setIsLoading(true);
+    setAnswer('');
     try {
       const { data } = await axios.get(
         `transations/cities-with-most-individual-transations?year=${year}&months=${String(
@@ -51,7 +52,7 @@ export default function Question5({ years }) {
         5.Quais os 10 municípios com mais número de transações por pessoas
         físicas em uma determinada faixa de tempo?
       </p>
-      <div className="row gy-4 mb-4">
+      <div className="row gy-4 mb-3">
         <div className="col-md-4 col-lg-3 pt-1">
           <select
             defaultValue="select"
@@ -86,8 +87,9 @@ export default function Question5({ years }) {
           </Button>
         </div>
       </div>
-      {months && (
+      {months.length > 0 && (
         <div className="py-2">
+          <p>Selecione o mês</p>
           {months.map((month) => (
             <FormCheck className="form-check-inline" key={month.id}>
               <FormCheckInput
@@ -119,7 +121,9 @@ export default function Question5({ years }) {
               <tr key={item.city_code}>
                 <td>{item.city}</td>
                 <td>{item.state}</td>
-                <td>{item.pix_individual}</td>
+                <td>
+                  {new Intl.NumberFormat('pt-BR').format(item.pix_individual)}
+                </td>
               </tr>
             ))}
           </tbody>

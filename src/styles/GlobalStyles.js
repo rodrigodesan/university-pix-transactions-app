@@ -21,6 +21,7 @@ export default createGlobalStyle`
 export const Container = styled(BootstrapContainer)`
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+  position: relative;
 `;
 
 export const Button = styled(BootstrapButton)`

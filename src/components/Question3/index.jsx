@@ -13,6 +13,7 @@ export default function Question3({ years }) {
 
   async function search() {
     setIsLoading(true);
+    setAnswer('');
     try {
       const { data } = await axios.get(
         `/transations/max-pix-avg-region?year=${year}`
@@ -59,7 +60,7 @@ export default function Question3({ years }) {
         {answer && (
           <p className="col-md-4 col-lg-6">
             Região: {answer.region}
-            <br /> Média: {answer.average}
+            <br /> Média: {answer.average.toFixed(2)}
           </p>
         )}
       </div>

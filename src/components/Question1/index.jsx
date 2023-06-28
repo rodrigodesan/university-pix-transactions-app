@@ -13,6 +13,7 @@ export default function Question1({ years }) {
 
   async function search() {
     setIsLoading(true);
+    setAnswer('');
     try {
       const { data } = await axios.get(
         `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=desc`
@@ -59,7 +60,7 @@ export default function Question1({ years }) {
         {answer && (
           <p className="col-md-4 col-lg-6">
             Estado: {answer.state}
-            <br /> Média: {answer.average}
+            <br /> Média: {answer.average.toFixed(2)}
           </p>
         )}
       </div>

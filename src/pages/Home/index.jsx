@@ -22,8 +22,10 @@ export default function Home() {
   const loadYears = useCallback(async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get('/years');
-      setYears(data);
+      const { data, status } = await axios.get('/years');
+      if (status < 200 || status > 299)
+        toast.error(`Falha na requisição com status ${status}`);
+      else setYears(data);
     } catch (err) {
       const status = get(err, 'response.status', 0);
       const errors = get(err, 'response.data.errors', []);

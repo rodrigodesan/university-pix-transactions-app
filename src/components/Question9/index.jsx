@@ -1,6 +1,7 @@
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import axios from '../../services/axios';
 import { yearTypes, stateTypes } from '../../propTypes/answers';
@@ -89,6 +90,6 @@ export default function Question9({ years, states }) {
 }
 
 Question9.propTypes = {
-  years: yearTypes.isRequired,
-  states: stateTypes.isRequired,
+  years: PropTypes.arrayOf(yearTypes).isRequired,
+  states: PropTypes.arrayOf(stateTypes).isRequired,
 };

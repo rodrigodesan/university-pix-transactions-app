@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { AuthContext } from './AuthContext';
-import { AuthReducer, userInitialState } from './reducer';
+import { AuthReducer, userInitialState } from './AuthReducer';
 import { useApi } from '../../hooks/useApi';
 import * as actions from './actions';
 
@@ -9,13 +9,17 @@ export function AuthProvider({ children }) {
   const [auth, dispatch] = useReducer(AuthReducer, userInitialState);
   const api = useApi();
 
-  const signin = async (email, password) => {
+  const signin = async (email, password, latitude = '', longitude = '') => {
     try {
       dispatch(actions.loginRequest());
-      const { user, token } = await api.signin(email, password);
+      const { user, token } = await api.signin(
+        email,
+        password,
+        latitude,
+        longitude
+      );
       if (user && token) {
         dispatch(actions.loginSuccess({ user, token }));
-        api.setAuthorization(auth.token);
         return true;
       }
       dispatch(actions.loginFailure);

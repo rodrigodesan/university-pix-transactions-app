@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { useApi } from '../../hooks/useApi';
 import * as types from '../contextTypes';
 
 const authToken = localStorage.getItem('authToken') ?? '';
@@ -15,6 +15,7 @@ export const userInitialState = {
 };
 
 export const AuthReducer = (state, action) => {
+  const api = useApi();
   switch (action.type) {
     case types.LOGIN_SUCCESS: {
       const newState = { ...state };
@@ -24,42 +25,17 @@ export const AuthReducer = (state, action) => {
       newState.isLoading = false;
       localStorage.setItem('authUser', JSON.stringify(newState.user));
       localStorage.setItem('authToken', newState.token);
+      api.setAuthorization(newState.token);
       return newState;
     }
     case types.LOGIN_FAILURE: {
-      delete axios.defaults.headers.Authorization;
+      api.removeAuthorization();
       localStorage.setItem('authUser', '');
       localStorage.setItem('authToken', '');
       const newState = { ...state, user: '', token: '', isLoggedIn: false };
       return newState;
     }
     case types.LOGIN_REQUEST: {
-      const newState = { ...state };
-      newState.isLoading = true;
-      return newState;
-    }
-    case types.REGISTER_UPDATED_SUCCESS: {
-      const newState = { ...state };
-      const user = {
-        nome: action.payload.nome,
-        email: action.payload.email,
-        id: action.payload.id,
-      };
-      newState.user = user;
-      newState.isLoading = false;
-      return newState;
-    }
-    case types.REGISTER_CREATED_SUCCESS: {
-      const newState = { ...state };
-      newState.isLoading = false;
-      return newState;
-    }
-    case types.REGISTER_FAILURE: {
-      const newState = { ...state };
-      newState.isLoading = false;
-      return newState;
-    }
-    case types.REGISTER_REQUEST: {
       const newState = { ...state };
       newState.isLoading = true;
       return newState;

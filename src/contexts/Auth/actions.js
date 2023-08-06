@@ -1,8 +1,8 @@
 import * as types from '../contextTypes';
 
-export async function loginRequest(payload = {}) {
+export function loginRequest(payload = {}) {
   return {
-    type: types.LOGIN_SUCCESS,
+    type: types.LOGIN_REQUEST,
     payload,
   };
 }

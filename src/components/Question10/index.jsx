@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 
-import axios from '../../services/axios';
+import { useApi } from '../../hooks/useApi';
 import { regionTypes } from '../../propTypes/answers';
 import { Button, Loader } from '../../styles/GlobalStyles';
 
@@ -10,14 +10,13 @@ export default function Question10({ regions }) {
   const [answer, setAnswer] = useState('');
   const [region, setRegion] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const api = useApi();
 
   async function search() {
     setIsLoading(true);
     setAnswer('');
     try {
-      const { data } = await axios.get(
-        `/transations/highest-transation-vl-region?region=${region}`
-      );
+      const { data } = await api.question10(region);
       if (!data) toast.error('Ano sem registros');
       setAnswer(data);
     } catch (err) {

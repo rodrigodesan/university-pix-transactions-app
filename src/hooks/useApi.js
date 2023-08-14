@@ -31,10 +31,60 @@ export const useApi = () => ({
   signup: (name, email, password) => {
     return api.post('/users', { name, email, password });
   },
-  question1: async (year) => {
-    const response = await api.get(
+
+  getYears: () => {
+    return api.get('/years');
+  },
+  getStates: () => {
+    return api.get('/states');
+  },
+  getRegions: () => {
+    return api.get('/regions');
+  },
+  question1: (year) => {
+    return api.get(
       `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=desc`
     );
-    return response;
+  },
+  question2: (year) => {
+    return api.get(
+      `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=asc`
+    );
+  },
+  question3: (year) => {
+    return api.get(`/transations/max-pix-avg-region?year=${year}`);
+  },
+  question4: (year) => {
+    return api.get(`/transations/pix-by-region?year=${year}`);
+  },
+  question5: (year, selectedMonths) => {
+    return api.get(
+      `transations/cities-with-most-individual-transations?year=${year}&months=${selectedMonths}`
+    );
+  },
+  question6: (minAvg) => {
+    return api.get(
+      `transations/higher-avg-on-vl-company-payer?minAvg=${minAvg}`
+    );
+  },
+  question7: (year) => {
+    return api.get(
+      `/transations/cities-diff-in-transation-vl?year=${year}&order=asc`
+    );
+  },
+  question8: (year) => {
+    return api.get(
+      `/transations/cities-diff-in-transation-vl?year=${year}&order=desc`
+    );
+  },
+  question9: (year, state) => {
+    return api.get(
+      `/transations/highest-transation-vl-state-year?year=${year}&state=${state}`
+    );
+  },
+  question10: (region) => {
+    return api.get(
+      `/transations/highest-transation-vl-region?region=${region}`
+    );
   },
 });

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 
 import { Table } from 'react-bootstrap';
-import axios from '../../services/axios';
+import { useApi } from '../../hooks/useApi';
 import { Button, Loader } from '../../styles/GlobalStyles';
 
 const avgs = [];
@@ -20,14 +20,13 @@ export default function Question6() {
   const [answer, setAnswer] = useState([]);
   const [minAvg, setMinAvg] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const api = useApi();
 
   async function search() {
     setIsLoading(true);
     setAnswer('');
     try {
-      const { data } = await axios.get(
-        `transations/higher-avg-on-vl-company-payer?minAvg=${minAvg}`
-      );
+      const { data } = await api.question6(minAvg);
       if (!data) toast.error('Não há transações acima desse valor');
       setAnswer(data);
     } catch (err) {

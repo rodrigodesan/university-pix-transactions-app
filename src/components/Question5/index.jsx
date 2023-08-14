@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { FormCheck, Table } from 'react-bootstrap';
 import FormCheckInput from 'react-bootstrap/esm/FormCheckInput';
 import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel';
-import axios from '../../services/axios';
+import { useApi } from '../../hooks/useApi';
 import { yearTypes } from '../../propTypes/answers';
 import { Button, Loader } from '../../styles/GlobalStyles';
 
@@ -15,6 +15,7 @@ export default function Question5({ years }) {
   const [months, setMonths] = useState([]);
   const [selectedMonths, setSelectedMonths] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const api = useApi();
 
   function handleSelectMonths(e) {
     const itemId = e.target.value;
@@ -32,11 +33,7 @@ export default function Question5({ years }) {
     setIsLoading(true);
     setAnswer('');
     try {
-      const { data } = await axios.get(
-        `transations/cities-with-most-individual-transations?year=${year}&months=${String(
-          selectedMonths
-        )}`
-      );
+      const { data } = await api.question5(year, String(selectedMonths));
       if (!data) toast.error('Ano sem registros');
       setAnswer(data);
     } catch (err) {

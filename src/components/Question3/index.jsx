@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 
-import axios from '../../services/axios';
+import { useApi } from '../../hooks/useApi';
 import { yearTypes } from '../../propTypes/answers';
 import { Button, Loader } from '../../styles/GlobalStyles';
 
@@ -10,14 +10,13 @@ export default function Question3({ years }) {
   const [answer, setAnswer] = useState('');
   const [year, setyear] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const api = useApi();
 
   async function search() {
     setIsLoading(true);
     setAnswer('');
     try {
-      const { data } = await axios.get(
-        `/transations/max-pix-avg-region?year=${year}`
-      );
+      const { data } = await api.question3(year);
       if (!data) toast.error('Ano sem registros');
       setAnswer(data);
     } catch (err) {

@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { apiUrl } from '../constants/enviromentsVariables';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: apiUrl,
 });
 
 export const useApi = () => ({
@@ -17,6 +18,9 @@ export const useApi = () => ({
       longitude,
     });
     return response.data;
+  },
+  getLogins: () => {
+    return api.get('/login');
   },
   setAuthorization: (token) => {
     api.defaults.headers.Authorization = `Bearer ${token}`;

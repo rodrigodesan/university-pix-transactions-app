@@ -23,7 +23,8 @@ export default function Question2({ years }) {
     } catch (err) {
       const status = get(err, 'response.status', 0);
       const errors = get(err, 'response.data.errors', []);
-      if (status === 400) errors.map((error) => toast.error(error));
+      if (status === 400 || status === 401)
+        errors.map((error) => toast.error(error));
     }
     setIsLoading(false);
   }

@@ -16,6 +16,10 @@ export default createGlobalStyle`
   body {
     overflow-x: hidden;
   }
+
+  .navbar-collapse {
+    flex-grow: 0;
+  }
 `;
 
 export const Container = styled(BootstrapContainer)`

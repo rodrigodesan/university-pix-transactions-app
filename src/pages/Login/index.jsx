@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Container, Loader } from '../../styles/GlobalStyles';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
-import { useValidateUser } from '../../hooks/useValidateUser';
+import { validateUser } from '../../utils/validateUser';
 import { useGeolocation } from '../../hooks/useGeolocation';
 
 export default function Login() {
@@ -11,7 +11,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { location } = useGeolocation();
-  const { validateEmail, validatePassword, showErrors } = useValidateUser();
+  const { validateEmail, validatePassword, showErrors } = validateUser();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {

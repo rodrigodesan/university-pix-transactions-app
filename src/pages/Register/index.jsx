@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { get } from 'lodash';
 import { Button, Container, Loader } from '../../styles/GlobalStyles';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
-import { useValidateUser } from '../../hooks/useValidateUser';
+import { validateUser } from '../../utils/validateUser';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useApi } from '../../hooks/useApi';
 
@@ -18,7 +18,7 @@ export default function Register() {
   const api = useApi();
   const { location } = useGeolocation();
   const { validateName, validateEmail, validatePassword, showErrors } =
-    useValidateUser();
+    validateUser();
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -52,7 +52,7 @@ export default function Register() {
 
   return (
     <Container>
-      <h2>Faça login para acessar os dados</h2>
+      <h2>Cadastre-se para acessar os dados</h2>
 
       <form className="col-lg-6">
         <div className="mb-3">

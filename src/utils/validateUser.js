@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { isEmail } from 'validator';
 
-export function useValidateUser() {
+export function validateUser() {
   let errors = [];
 
   const validateName = (name) => {

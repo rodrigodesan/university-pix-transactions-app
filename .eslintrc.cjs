@@ -38,5 +38,6 @@ module.exports = {
     'no-array-index-key': 0,
     'react/jsx-no-constructed-context-values': 0,
     'react/destructuring-assignment': 0,
+    'react/no-array-index-key': 0,
   },
 };

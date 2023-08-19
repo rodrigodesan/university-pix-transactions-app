@@ -1,12 +1,15 @@
-# university-pix-transations-app
-API: https://github.com/rodrigodesan/university-pix-transations-api
+# university-pix-transactions-app
+API: https://github.com/rodrigodesan/university-pix-transactions-api
 
-Deployment: https://pix-transations-app.vercel.app/
+Deployment: https://pix-transactions-app.vercel.app/
 
 
 .env format:
 
-`VITE_API_URL=`
+```
+VITE_API_URL=
+VITE_GOOGLE_MAPS_KEY=
+```
 
 Starting up:
 ```

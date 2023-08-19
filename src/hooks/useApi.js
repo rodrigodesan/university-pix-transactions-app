@@ -43,48 +43,48 @@ export const useApi = () => ({
   },
   question1: (year) => {
     return api.get(
-      `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=desc`
+      `/transactions/max-min-avg-state-by-vl-per-qt?year=${year}&order=desc`
     );
   },
   question2: (year) => {
     return api.get(
-      `/transations/max-min-avg-state-by-vl-per-qt?year=${year}&order=asc`
+      `/transactions/max-min-avg-state-by-vl-per-qt?year=${year}&order=asc`
     );
   },
   question3: (year) => {
-    return api.get(`/transations/max-pix-avg-region?year=${year}`);
+    return api.get(`/transactions/max-pix-avg-region?year=${year}`);
   },
   question4: (year) => {
-    return api.get(`/transations/pix-by-region?year=${year}`);
+    return api.get(`/transactions/pix-by-region?year=${year}`);
   },
   question5: (year, selectedMonths) => {
     return api.get(
-      `transations/cities-with-most-individual-transations?year=${year}&months=${selectedMonths}`
+      `transactions/cities-with-most-individual-transactions?year=${year}&months=${selectedMonths}`
     );
   },
   question6: (minAvg) => {
     return api.get(
-      `transations/higher-avg-on-vl-company-payer?minAvg=${minAvg}`
+      `transactions/higher-avg-on-vl-company-payer?minAvg=${minAvg}`
     );
   },
   question7: (year) => {
     return api.get(
-      `/transations/cities-diff-in-transation-vl?year=${year}&order=asc`
+      `/transactions/cities-diff-in-transaction-vl?year=${year}&order=asc`
     );
   },
   question8: (year) => {
     return api.get(
-      `/transations/cities-diff-in-transation-vl?year=${year}&order=desc`
+      `/transactions/cities-diff-in-transaction-vl?year=${year}&order=desc`
     );
   },
   question9: (year, state) => {
     return api.get(
-      `/transations/highest-transation-vl-state-year?year=${year}&state=${state}`
+      `/transactions/highest-transaction-vl-state-year?year=${year}&state=${state}`
     );
   },
   question10: (region) => {
     return api.get(
-      `/transations/highest-transation-vl-region?region=${region}`
+      `/transactions/highest-transaction-vl-region?region=${region}`
     );
   },
 });

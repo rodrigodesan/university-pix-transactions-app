@@ -52,7 +52,7 @@ export default function Register() {
 
   return (
     <Container>
-      <h2>Cadastre-se para acessar os dados</h2>
+      <h1>Cadastro</h1>
 
       <form className="col-lg-6">
         <div className="mb-3">

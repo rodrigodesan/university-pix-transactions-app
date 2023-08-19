@@ -36,7 +36,7 @@ export default function Login() {
 
   return (
     <Container>
-      <h2>Faça login para acessar os dados</h2>
+      <h1>Login</h1>
 
       <form className="col-lg-6">
         <div className="mb-3">

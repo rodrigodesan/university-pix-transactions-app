@@ -35,11 +35,20 @@ export default function Header() {
                 Localizações
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-            </li>
+            {!auth.isLoggedIn && (
+              <>
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/signup" className="nav-link">
+                    Registro
+                  </Link>
+                </li>
+              </>
+            )}
             {auth.isLoggedIn && (
               <li className="nav-item">
                 {' '}

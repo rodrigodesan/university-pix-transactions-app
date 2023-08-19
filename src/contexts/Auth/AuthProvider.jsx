@@ -22,10 +22,10 @@ export function AuthProvider({ children }) {
         dispatch(actions.loginSuccess({ user, token }));
         return true;
       }
-      dispatch(actions.loginFailure);
+      dispatch(actions.loginFailure());
       return false;
     } catch (err) {
-      dispatch(actions.loginFailure);
+      dispatch(actions.loginFailure());
       return false;
     }
   };
@@ -34,8 +34,24 @@ export function AuthProvider({ children }) {
     dispatch(actions.loginFailure());
   };
 
+  const validate = async () => {
+    try {
+      dispatch(actions.loginRequest());
+      const data = auth.token ? await api.validateToken(auth.token) : '';
+      if (data.user) {
+        dispatch(actions.validateSuccess());
+        return true;
+      }
+      dispatch(actions.loginFailure());
+      return false;
+    } catch (err) {
+      dispatch(actions.loginFailure());
+      return false;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ auth, signin, signout }}>
+    <AuthContext.Provider value={{ auth, signin, signout, validate }}>
       {children}
     </AuthContext.Provider>
   );

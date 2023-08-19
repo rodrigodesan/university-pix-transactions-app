@@ -27,7 +27,7 @@ export default function Login() {
       );
       if (isLogged) {
         toast.success('Login realizado com sucesso');
-        navigate('/');
+        navigate('/locations');
       } else {
         toast.error('Usuário ou senha inválidos');
       }

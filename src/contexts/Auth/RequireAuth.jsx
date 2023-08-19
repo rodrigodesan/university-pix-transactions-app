@@ -1,28 +1,24 @@
 import PropTypes from 'prop-types';
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AuthContext } from './AuthContext';
-import { useApi } from '../../hooks/useApi';
 
 export default function RequireAuth({ children }) {
-  const { signout, auth } = useContext(AuthContext);
+  const { validate } = useContext(AuthContext);
   const navigate = useNavigate();
-  const api = useApi();
+
+  const validateRef = useRef(validate);
 
   const validateToken = useCallback(async () => {
     try {
-      const data = auth.token ? await api.validateToken(auth.token) : '';
-      if (!data || data.errors) {
-        signout();
-        navigate('/login');
-      } else {
-        api.setAuthorization(auth.token);
-      }
+      const isValid = await validateRef.current();
+      if (!isValid) navigate('/login');
     } catch (err) {
-      signout();
+      toast.error('Token inválido');
       navigate('/login');
     }
-  }, [signout, navigate, auth, api]);
+  }, [navigate]);
 
   useEffect(() => {
     validateToken();

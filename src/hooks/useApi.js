@@ -23,10 +23,10 @@ export const useApi = () => ({
     return api.get('/login');
   },
   setAuthorization: (token) => {
-    api.defaults.headers.Authorization = `Bearer ${token}`;
+    api.defaults.headers.authorization = `Bearer ${token}`;
   },
   removeAuthorization: () => {
-    delete api.defaults.headers.Authorization;
+    delete api.defaults.headers.authorization;
   },
   signup: (name, email, password) => {
     return api.post('/users', { name, email, password });

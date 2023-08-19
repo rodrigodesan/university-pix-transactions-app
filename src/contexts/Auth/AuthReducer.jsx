@@ -11,7 +11,6 @@ export const userInitialState = {
   token: '' || authToken,
   user: {} || authUser,
   isLoading: false,
-  errorMessage: null,
 };
 
 export const AuthReducer = (state, action) => {
@@ -32,12 +31,24 @@ export const AuthReducer = (state, action) => {
       api.removeAuthorization();
       localStorage.setItem('authUser', '');
       localStorage.setItem('authToken', '');
-      const newState = { ...state, user: '', token: '', isLoggedIn: false };
+      const newState = {
+        ...state,
+        user: '',
+        token: '',
+        isLoggedIn: false,
+        isLoading: false,
+      };
       return newState;
     }
     case types.LOGIN_REQUEST: {
       const newState = { ...state };
       newState.isLoading = true;
+      return newState;
+    }
+    case types.VALIDATE_SUCCESS: {
+      const newState = { ...state };
+      newState.isLoading = false;
+      api.setAuthorization(newState.token);
       return newState;
     }
     default:

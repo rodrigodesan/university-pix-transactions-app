@@ -20,3 +20,10 @@ export function loginFailure(payload = {}) {
     payload,
   };
 }
+
+export function validateSuccess(payload = {}) {
+  return {
+    type: types.VALIDATE_SUCCESS,
+    payload,
+  };
+}

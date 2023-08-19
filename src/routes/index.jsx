@@ -12,14 +12,7 @@ import Register from '../pages/Register';
 export default function RoutesAll() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <RequireAuth>
-            <Home />
-          </RequireAuth>
-        }
-      />
+      <Route path="/" element={<Home />} />
       <Route
         path="/locations"
         element={

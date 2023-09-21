@@ -4,12 +4,12 @@ import * as types from '../contextTypes';
 const authToken = localStorage.getItem('authToken') ?? '';
 const authUser = localStorage.getItem('authUser')
   ? JSON.parse(localStorage.getItem('authUser'))
-  : '';
+  : {};
 
 export const userInitialState = {
   isLoggedIn: !!authUser,
-  token: '' || authToken,
-  user: {} || authUser,
+  token: authToken,
+  user: authUser,
   isLoading: false,
 };
 

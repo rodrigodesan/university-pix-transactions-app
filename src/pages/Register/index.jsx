@@ -2,7 +2,8 @@ import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { get } from 'lodash';
-import { Button, Container, Loader } from '../../styles/GlobalStyles';
+import { Button, Loader } from '../../styles/GlobalStyles';
+import { FormContainer } from '../../styles/Forms';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
 import { validateUser } from '../../utils/validateUser';
 import { useGeolocation } from '../../hooks/useGeolocation';
@@ -51,74 +52,66 @@ export default function Register() {
   };
 
   return (
-    <Container>
-      <h1>Cadastro</h1>
-
-      <form className="col-lg-6">
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Nome
-          </label>
-          <input
-            type="text"
-            value={name}
-            id="name"
-            className="form-control"
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Digite seu nome"
-          />
+    <FormContainer>
+      <main className="form-signin w-100 m-auto">
+        <form>
+          <h1 className="h3 mb-3 fw-normal">Cadastre-se</h1>
+          <div className="input-box">
+            <div className="form-floating">
+              <input
+                type="text"
+                value={name}
+                id="name"
+                className="form-control"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <label htmlFor="name">Nome</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="email"
+                value={email}
+                id="email"
+                className="form-control"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="email">E-mail</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="password"
+                value={password}
+                id="password"
+                className="form-control"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label htmlFor="password">Senha</label>
+            </div>
+            <div className="form-floating">
+              <input
+                type="password"
+                value={confirmPassword}
+                id="confirm-password"
+                className="form-control"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <label htmlFor="confirm-password">Confirme a Senha</label>
+            </div>
+          </div>
+          <Button
+            type="submit"
+            onClick={handleSignup}
+            disabled={!name || !email || !password || !confirmPassword}
+            className="w-100 my-3"
+          >
+            <Loader isLoading={isLoading} />
+            Cadastrar-se
+          </Button>
+        </form>
+        <div>
+          Já possui uma conta? <Link to="/login">Faça Login</Link>
         </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            E-mail
-          </label>
-          <input
-            type="email"
-            value={email}
-            id="email"
-            className="form-control"
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Digite seu e-mail"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Senha
-          </label>
-          <input
-            type="password"
-            value={password}
-            id="password"
-            className="form-control"
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Digite sua senha"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="confirm-password" className="form-label">
-            Confirme a Senha
-          </label>
-          <input
-            type="password"
-            value={confirmPassword}
-            id="confirm-password"
-            className="form-control"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirme sua senha"
-          />
-        </div>
-        <Button
-          type="submit"
-          onClick={handleSignup}
-          disabled={!name || !email || !password || !confirmPassword}
-        >
-          <Loader isLoading={isLoading} />
-          Cadastrar-se
-        </Button>
-      </form>
-      <div>
-        Já possui uma conta? <Link to="/login">Faça Login</Link>
-      </div>
-    </Container>
+      </main>
+    </FormContainer>
   );
 }

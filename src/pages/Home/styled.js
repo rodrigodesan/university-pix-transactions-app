@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { Container } from 'react-bootstrap';
 import { Loader as GlobalLoader } from '../../styles/GlobalStyles';
 
-export const QuestionsBox = styled.div`
+export const QuestionsBox = styled(Container)`
   display: flex;
   flex-direction: column;
   row-gap: 1rem;

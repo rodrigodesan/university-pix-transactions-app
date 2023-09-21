@@ -6,21 +6,19 @@ import { useApi } from '../../hooks/useApi';
 
 import { Container } from '../../styles/GlobalStyles';
 import { QuestionsBox, Loader } from './styled';
-import Question1 from '../../components/Question1';
-import Question2 from '../../components/Question2';
-import Question3 from '../../components/Question3';
-import Question4 from '../../components/Question4';
-import Question5 from '../../components/Question5';
-import Question6 from '../../components/Question6';
-import Question7 from '../../components/Question7';
-import Question8 from '../../components/Question8';
-import Question9 from '../../components/Question9';
-import Question10 from '../../components/Question10';
+
+import CardSelect from '../../components/CardSelect';
+
+import { questionsOptions, questionsParams } from './helpers';
+import SelectionResults from '../../components/SelectionResults';
 
 export default function Home() {
   const [years, setYears] = useState([]);
   const [states, setStates] = useState([]);
   const [regions, setRegions] = useState([]);
+  const [question, setQuestion] = useState('');
+  const [questionText, setQuestionText] = useState('');
+  const [questionParams, setQuestionParams] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { getYears, getStates, getRegions } = useApi();
 
@@ -48,21 +46,38 @@ export default function Home() {
     loadData(getStatesRef.current, setStates);
     loadData(getRegionsRef.current, setRegions);
   }, [loadData]);
+
+  useEffect(() => {
+    if (question) {
+      setQuestionParams(questionsParams[question] ?? []);
+    }
+  }, [question]);
+
   return (
     <Container>
       <Loader isLoading={isLoading} />
-      <h1 className="text-center">Consultas de dados</h1>
+      <h1 className="text-center h2 mb-4">Consultas de dados</h1>
       <QuestionsBox>
-        <Question1 years={years} />
-        <Question2 years={years} />
-        <Question3 years={years} />
-        <Question4 years={years} />
-        <Question5 years={years} />
-        <Question6 />
-        <Question7 years={years} />
-        <Question8 years={years} />
-        <Question9 years={years} states={states} />
-        <Question10 regions={regions} />
+        <div className="row justify-content-center">
+          <div className="col-12 mb-3">
+            <CardSelect
+              items={questionsOptions}
+              setValue={setQuestion}
+              setText={setQuestionText}
+              titleText="Pergunta da Busca"
+              defaultText="Selecione a pergunta"
+              results={questionText}
+            />
+          </div>
+          <SelectionResults
+            key={question}
+            question={question}
+            questionParams={questionParams}
+            years={years}
+            states={states}
+            regions={regions}
+          />
+        </div>
       </QuestionsBox>
     </Container>
   );

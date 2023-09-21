@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef, useContext } from 'react';
 import { get } from 'lodash';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
 import { useApi } from '../../hooks/useApi';
 import { googleMapsKey } from '../../constants/enviromentsVariables';
@@ -123,17 +124,35 @@ export default function Locations() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
-      <h1>Localizações dos logins</h1>
-      <MapContainer>
-        {locations && <Map locations={locations} center={center} zoom={zoom} />}
-      </MapContainer>
-      {cities.length && (
-        <ul className="mt-4">
-          {cities.map((citie, index) => (
-            <li key={index}>{`${citie[0]} (${citie[1]})`}</li>
-          ))}
-        </ul>
-      )}
+      <div className="row">
+        <div className="col-lg-6">
+          <div className="embed-responsive embed-responsive-16by9">
+            <MapContainer>
+              {locations && (
+                <Map locations={locations} center={center} zoom={zoom} />
+              )}
+            </MapContainer>
+          </div>
+        </div>
+        <div className="col-lg-6">
+          <Card>
+            <Card.Header>
+              <h1 className="h5">Localização dos Logins</h1>
+            </Card.Header>
+            <Card.Body>
+              {cities.length && (
+                <ListGroup>
+                  {cities.map((citie, index) => (
+                    <ListGroupItem
+                      key={index}
+                    >{`${citie[0]} (${citie[1]})`}</ListGroupItem>
+                  ))}
+                </ListGroup>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
     </Container>
   );
 }

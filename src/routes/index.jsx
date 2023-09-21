@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import RequireAuth from '../contexts/Auth/RequireAuth';
 
 import LoginRoute from './LoginRoute';
+import HomeRoute from './HomeRoute';
 
 import Home from '../pages/Home';
 import Locations from '../pages/Locations';
@@ -12,7 +13,15 @@ import Register from '../pages/Register';
 export default function RoutesAll() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<HomeRoute />} />
+      <Route
+        path="/home"
+        element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        }
+      />
       <Route
         path="/locations"
         element={

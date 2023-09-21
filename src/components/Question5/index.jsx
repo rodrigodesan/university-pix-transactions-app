@@ -1,21 +1,17 @@
-import { get } from 'lodash';
-import { toast } from 'react-toastify';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import { FormCheck, Table } from 'react-bootstrap';
+import { FormCheck, Card } from 'react-bootstrap';
 import FormCheckInput from 'react-bootstrap/esm/FormCheckInput';
 import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel';
-import { useApi } from '../../hooks/useApi';
-import { yearTypes } from '../../propTypes/answers';
-import { Button, Loader } from '../../styles/GlobalStyles';
 
-export default function Question5({ years }) {
-  const [answer, setAnswer] = useState([]);
-  const [year, setyear] = useState(0);
+import { CardBody } from './styled';
+import { translateMonth } from '../../utils/dataTreatment';
+
+export default function Question5({ years, setParamList }) {
   const [months, setMonths] = useState([]);
   const [selectedMonths, setSelectedMonths] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const api = useApi();
+  const [setParam1, setParam2] = setParamList;
 
   function handleSelectMonths(e) {
     const itemId = e.target.value;
@@ -27,36 +23,20 @@ export default function Question5({ years }) {
       currentMonths.splice(requirementIndex, 1);
     }
     setSelectedMonths(currentMonths);
+    setParam2(currentMonths);
   }
 
-  async function search() {
-    setIsLoading(true);
-    setAnswer('');
-    try {
-      const { data } = await api.question5(year, String(selectedMonths));
-      if (!data) toast.error('Ano sem registros');
-      setAnswer(data);
-    } catch (err) {
-      const status = get(err, 'response.status', 0);
-      const errors = get(err, 'response.data.errors', []);
-      if (status === 400) errors.map((error) => toast.error(error));
-    }
-    setIsLoading(false);
-  }
   return (
-    <div className="mb-3">
-      <p>
-        5.Quais os 10 municípios com mais número de transações por pessoas
-        físicas em uma determinada faixa de tempo?
-      </p>
-      <div className="row gy-4 mb-3">
-        <div className="col-md-4 col-lg-3 pt-1">
+    <Card>
+      <Card.Header className="d-flex flex-wrap justify-content-between align-items-center">
+        Selecione o ano e os meses
+        <div className="col-lg-5">
           <select
             defaultValue="select"
             className="form-select"
             onChange={(e) => {
               const yearId = Number(e.target.value);
-              setyear(yearId);
+              setParam1(yearId);
               const yearMonths = years.find((item) => item.id === yearId);
               setMonths(yearMonths.YearMonths);
               setSelectedMonths([]);
@@ -73,61 +53,41 @@ export default function Question5({ years }) {
               ))}
           </select>
         </div>
-        <div className="col-md-3 col-lg-2 pt-1">
-          <Button
-            disabled={!year || !selectedMonths.length}
-            onClick={search}
-            className="w-100"
-          >
-            <Loader isLoading={isLoading} />
-            Buscar
-          </Button>
-        </div>
-      </div>
-      {months.length > 0 && (
-        <div className="py-2">
-          <p>Selecione o mês</p>
-          {months.map((month) => (
-            <FormCheck className="form-check-inline" key={month.id}>
-              <FormCheckInput
-                type="checkbox"
-                id={month.month_num}
-                value={month.id}
-                name="selectedMonths"
-                checked={selectedMonths.includes(String(month.id))}
-                onChange={handleSelectMonths}
-              />
-              <FormCheckLabel htmlFor={month.month_num}>
-                {month.month}
-              </FormCheckLabel>
-            </FormCheck>
-          ))}
-        </div>
-      )}
-      {answer.length > 0 && (
-        <Table className="table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Cidade</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Quantidade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {answer.map((item) => (
-              <tr key={item.city_code}>
-                <td>{item.city}</td>
-                <td>{item.state}</td>
-                <td>
-                  {new Intl.NumberFormat('pt-BR').format(item.pix_individual)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-    </div>
+      </Card.Header>
+      <CardBody className="flex-wrap">
+        {months.map((month) => (
+          <FormCheck className="form-check-inline" key={month.id}>
+            <FormCheckInput
+              type="checkbox"
+              id={month.month_num}
+              value={month.id}
+              name="selectedMonths"
+              checked={selectedMonths.includes(String(month.id))}
+              onChange={handleSelectMonths}
+            />
+            <FormCheckLabel htmlFor={month.month_num}>
+              {translateMonth(month.month)}
+            </FormCheckLabel>
+          </FormCheck>
+        ))}
+      </CardBody>
+    </Card>
   );
 }
 
-Question5.propTypes = yearTypes.isRequired;
+Question5.propTypes = {
+  setParamList: PropTypes.arrayOf(PropTypes.func).isRequired,
+  years: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      year: PropTypes.number,
+      YearMonths: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          month: PropTypes.string,
+          month_num: PropTypes.number,
+        })
+      ),
+    })
+  ).isRequired,
+};

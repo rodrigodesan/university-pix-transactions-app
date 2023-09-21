@@ -12,10 +12,12 @@ export default createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
   }
   body {
     overflow-x: hidden;
   }
+
 
   .navbar-collapse {
     flex-grow: 0;
@@ -23,9 +25,16 @@ export default createGlobalStyle`
 `;
 
 export const Container = styled(BootstrapContainer)`
-  padding-top: 2.5rem;
+  padding-top: 5rem;
   padding-bottom: 2.5rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: 100%;
+  background-color: rgba(var(--bs-light-rgb), 1) !important;
 `;
 
 export const Button = styled(BootstrapButton)`
@@ -40,7 +49,7 @@ export const Loader = styled.div`
   top: -2%;
   left: -2%;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: rgba(var(--bs-light-rgb), 1);
   background-image: url(${loader});
   background-repeat: no-repeat;
   background-position: center;

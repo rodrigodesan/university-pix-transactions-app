@@ -41,21 +41,25 @@ export const useApi = () => ({
   getRegions: () => {
     return api.get('/regions');
   },
-  question1: (year) => {
+  question1: (startYear, endYear) => {
     return api.get(
-      `/transactions/max-min-avg-state-by-vl-per-qt?year=${year}&order=desc`
+      `/transactions/max-min-avg-state-by-vl-per-qt?startYear=${startYear}&endYear=${endYear}&order=desc`
     );
   },
-  question2: (year) => {
+  question2: (startYear, endYear) => {
     return api.get(
-      `/transactions/max-min-avg-state-by-vl-per-qt?year=${year}&order=asc`
+      `/transactions/max-min-avg-state-by-vl-per-qt?startYear=${startYear}&endYear=${endYear}&order=asc`
     );
   },
-  question3: (year) => {
-    return api.get(`/transactions/max-pix-avg-region?year=${year}`);
+  question3: (startYear, endYear) => {
+    return api.get(
+      `/transactions/max-pix-avg-region?startYear=${startYear}&endYear=${endYear}`
+    );
   },
-  question4: (year) => {
-    return api.get(`/transactions/pix-by-region?year=${year}`);
+  question4: (startYear, endYear) => {
+    return api.get(
+      `/transactions/pix-by-region?startYear=${startYear}&endYear=${endYear}`
+    );
   },
   question5: (year, selectedMonths) => {
     return api.get(
@@ -67,19 +71,19 @@ export const useApi = () => ({
       `transactions/higher-avg-on-vl-company-payer?minAvg=${minAvg}`
     );
   },
-  question7: (year) => {
+  question7: (startYear, endYear) => {
     return api.get(
-      `/transactions/cities-diff-in-transaction-vl?year=${year}&order=asc`
+      `/transactions/cities-diff-in-transaction-vl?startYear=${startYear}&endYear=${endYear}&order=asc`
     );
   },
-  question8: (year) => {
+  question8: (startYear, endYear) => {
     return api.get(
-      `/transactions/cities-diff-in-transaction-vl?year=${year}&order=desc`
+      `/transactions/cities-diff-in-transaction-vl?startYear=${startYear}&endYear=${endYear}&order=desc`
     );
   },
-  question9: (year, state) => {
+  question9: (startYear, endYear, state) => {
     return api.get(
-      `/transactions/highest-transaction-vl-state-year?year=${year}&state=${state}`
+      `/transactions/highest-transaction-vl-state-year?startYear=${startYear}&endYear=${endYear}&state=${state}`
     );
   },
   question10: (region) => {

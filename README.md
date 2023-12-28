@@ -1,7 +1,7 @@
 # university-pix-transactions-app
 API: https://github.com/rodrigodesan/university-pix-transactions-api
 
-Deployment: https://pix-transations-app.vercel.app/
+Deployment: [https://pix-transations-app.vercel.app/](https://pix-transactions.vercel.app/)
 
 
 .env format:

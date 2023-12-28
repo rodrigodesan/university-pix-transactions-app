@@ -124,7 +124,7 @@ export default function Locations() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
-      <div className="row">
+      <div className="container row">
         <div className="col-lg-6">
           <div className="embed-responsive embed-responsive-16by9">
             <MapContainer>
